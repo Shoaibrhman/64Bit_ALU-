@@ -1,0 +1,56 @@
+//Design Block
+module alu64(Y, C, A, B, select);
+
+input [63:0] A, B;
+input [2:0] select;
+
+output reg [63:0] Y;
+output reg C;
+
+always @(*)
+begin
+    C = 0;
+
+    case(select)
+
+        3'b000: begin       // AND
+            Y = A & B;
+        end
+
+        3'b001: begin       // OR
+            Y = A | B;
+        end
+
+        3'b010: begin       // XOR
+            Y = A ^ B;
+        end
+
+        3'b011: begin       // NOT
+            Y = ~A;
+        end
+
+        3'b100: begin       // ADD
+            {C, Y} = A + B;
+        end
+
+        3'b101: begin       // NOR
+            Y = ~(A | B);
+        end
+
+        3'b110: begin       // NAND
+            Y = ~(A & B);
+        end
+
+        3'b111: begin       // XNOR
+            Y = ~(A ^ B);
+        end
+
+        default: begin
+            Y = 64'd0;
+            C = 0;
+        end
+
+    endcase
+end
+
+endmodule
